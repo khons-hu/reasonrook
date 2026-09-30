@@ -1,6 +1,6 @@
 # Khonsolve
 
-[Open app ↗](https://thinkroom-khonsu.vercel.app/)
+[Open app ↗](https://solve.khns.dev/)
 
 A free practice workshop for coding, debugging, logic, prompts and agent skills. Write an approach, try it, reveal hints when needed, then reflect.
 
@@ -49,7 +49,7 @@ Sources checked September 2026:
 
 Exercises live in `content.mjs`. Include a learning objective, three hints, a worked explanation and three observable review criteria. Runnable exercises also need starter code, deterministic tests and a reference implementation. Run `npm test` and check keyboard/mobile behaviour before proposing changes.
 
-Built by [khonsu](https://khons-hu.vercel.app/) with coding-agent assistance.
+Built by [khonsu](https://khns.dev/) with coding-agent assistance.
 
 Vendored runtime provenance and build notes: [vendor/README.md](vendor/README.md).
 
