@@ -1,4 +1,4 @@
-# Khonsolve
+# Reasonrook
 
 [Open app ↗](https://solve.khns.dev/)
 
@@ -30,7 +30,7 @@ No npm install is needed. Runtime files are vendored and loaded on demand. Deplo
 
 Passing the visible cases is not a proof of correctness or a complexity assessment. Written exercises are self-reviewed. Reference answers are teaching examples, not the only valid solution. This is a curated starting collection, not a continuously updated or universally best curriculum.
 
-All local language runners execute in a Worker inside a sandboxed iframe without `allow-same-origin`. Runner CSP blocks HTTP network access (in-memory blob resources are permitted), and the worker is terminated after two seconds of code execution (runtime initialization has a separate limit). There is no server-side execution in Khonsolve. Go Playground and Compiler Explorer run code externally only after you submit it there. TypeScript uses a browser-compatible 6.0.3 transpiler, without semantic type checking or package imports. Python uses Pyodide 314.0.7, with an approximately 14 MB first-run download from this site and no pip support. It is a personal learning runner, not a secure competition judge: a determined user can inspect answers or tamper with their own results. Memory limits depend on the browser. Do not paste secrets or run code you do not understand.
+All local language runners execute in a Worker inside a sandboxed iframe without `allow-same-origin`. Runner CSP blocks HTTP network access (in-memory blob resources are permitted), and the worker is terminated after two seconds of code execution (runtime initialization has a separate limit). There is no server-side execution in Reasonrook. Go Playground and Compiler Explorer run code externally only after you submit it there. TypeScript uses a browser-compatible 6.0.3 transpiler, without semantic type checking or package imports. Python uses Pyodide 314.0.7, with an approximately 14 MB first-run download from this site and no pip support. It is a personal learning runner, not a secure competition judge: a determined user can inspect answers or tamper with their own results. Memory limits depend on the browser. Do not paste secrets or run code you do not understand.
 
 Progress stays in this browser's local storage. Clearing site data or using another device does not preserve it. Export a backup. Import validates the schema, caps file/field sizes, ignores unknown exercise IDs and merges known exercises after explicit confirmation.
 
@@ -61,6 +61,6 @@ Bundled compiler and runtime notices are documented in [vendor/README.md](vendor
 
 ## Android preview
 
-[Download the signed APK](https://github.com/khons-hu/khonsolve/releases/tag/android-v1.0.0-preview.1) · [Build instructions](android/README.md) · [Verification](android/VERIFICATION.md)
+[Download the signed APK](https://github.com/khons-hu/reasonrook/releases/tag/android-v1.0.0-preview.1) · [Build instructions](android/README.md) · [Verification](android/VERIFICATION.md)
 
 Android 8.0+ with a current TWA-capable browser (Chrome recommended). This small package opens the live web app. First load and server data require internet. Build, lint and signature checks pass, but installation and flows on an Android device have not yet been verified. No Google Play release or additional background notification service.

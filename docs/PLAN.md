@@ -1,4 +1,4 @@
-# Khonsolve implementation
+# Reasonrook implementation
 Approved: user said go on; JavaScript runner plus any-language notes selected as recommended default.
 
 1. Original content: five tracks, 15 exercises, progressive hints, concrete self-review rubrics and worked explanations. Coding exercises include public tests and reference functions for verification.

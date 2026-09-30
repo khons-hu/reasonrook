@@ -3,7 +3,7 @@ export const VERSION=1;
 export function blank(){return {version:VERSION,selected:'repeat',theme:globalThis.matchMedia?.('(prefers-color-scheme: light)').matches?'light':'dark',attempts:{}};}
 export function newAttempt(){return {notes:'',code:null,language:'javascript',drafts:{},reflection:'',hints:0,review:false,done:false,revisit:false,checks:[]};}
 export function validate(raw,ids){
- if(!raw||typeof raw!=='object'||raw.version!==VERSION||!raw.attempts||typeof raw.attempts!=='object'||Array.isArray(raw.attempts))throw Error('This is not a Khonsolve v1 backup.');
+ if(!raw||typeof raw!=='object'||raw.version!==VERSION||!raw.attempts||typeof raw.attempts!=='object'||Array.isArray(raw.attempts))throw Error('This is not a Reasonrook v1 backup.');
  const result=blank();result.selected=ids.includes(raw.selected)?raw.selected:ids[0];result.theme=raw.theme==='dark'||raw.theme==='light'?raw.theme:result.theme;
  for(const [id,a] of Object.entries(raw.attempts)){
   if(!ids.includes(id))continue;

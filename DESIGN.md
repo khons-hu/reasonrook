@@ -17,7 +17,7 @@ Prompt exercises cover clear goals, input/output contracts, evidence, uncertaint
 Recommended: in-browser JavaScript runner plus any-language notes. Alternative: notes with external runners. Expanded alternative: Python and JavaScript runtimes. Never execute visitor code on the hosting server. Browser execution must be isolated from app storage and network, bounded by a timeout, and tested against infinite loops and errors.
 
 ## Interface
-Working name: Khonsolve. A quiet workshop, not a leaderboard. Slate blue #20354a, fog #edf2f5, paper #ffffff, muted blue #667b90, ochre #b47529. Georgia for exercise headings, system sans for controls and body, monospace for code. Desktop: searchable/filterable exercise library alongside a focused workbench. Mobile: library above workbench. Signature: the attempt/hints/review progression exposes help deliberately rather than giving away solutions on arrival. No ambient animation.
+Working name: Reasonrook. A quiet workshop, not a leaderboard. Slate blue #20354a, fog #edf2f5, paper #ffffff, muted blue #667b90, ochre #b47529. Georgia for exercise headings, system sans for controls and body, monospace for code. Desktop: searchable/filterable exercise library alongside a focused workbench. Mobile: library above workbench. Signature: the attempt/hints/review progression exposes help deliberately rather than giving away solutions on arrival. No ambient animation.
 
 ## Data
 Local browser storage for drafts, completion and reflection. JSON export/import with schema validation and size bounds. Clear indication that browser data can be lost and export is a backup. No secrets, telemetry or backend required.
