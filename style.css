@@ -26,3 +26,64 @@ button.primary:hover{background:var(--ink);color:var(--paper);border-color:var(-
 
 /* Motion preference: System follows the OS. On and Off are explicit visitor choices. */
 .motion-control{white-space:nowrap;font-size:11px!important}.motion-off *,.motion-off *::before,.motion-off *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}@media(prefers-reduced-motion:reduce){html:not(.motion-force-on){scroll-behavior:auto}html:not(.motion-force-on) *,html:not(.motion-force-on) *::before,html:not(.motion-force-on) *::after{animation:none!important;transition:none!important}}
+
+/* ---------- Moonlit family: the current khns.dev look ----------
+   Warm paper and midnight palettes from the portfolio, sans headings under one Georgia title, sans eyebrows,
+   pill buttons, 8px fields, 16px lit panels and a glass header. Reasonrook keeps its amber accent. */
+:root{--bg:#e9e6df;--paper:#f2efe9;--soft:#e4e0d7;--ink:#172430;--muted:#4c5966;--line:#d4cfc4;--line-strong:#b3ac9e;--field:#fbfaf7;--raised:#f3f0ea;--rim:rgba(255,255,255,.95);--glass:rgba(233,230,223,.8);--lift:0 26px 70px rgba(45,38,24,.2);--on-accent:#f7f5f0}
+html[data-theme=dark]{--bg:#090f16;--paper:#0e1721;--soft:#142131;--ink:#e3e9ef;--muted:#98a7b7;--line:#1f2d3a;--line-strong:#33485b;--field:#070c12;--raised:#0f1923;--rim:rgba(207,227,240,.1);--glass:rgba(9,15,22,.74);--lift:0 30px 90px rgba(0,0,0,.55);--on-accent:#08111a}
+button,a,input,textarea,summary,select{outline-offset:3px}
+::selection{background:#52738b;color:#fff}
+
+/* Header: glass across the full width once the page scrolls under it; content stays in the page column. */
+.top{position:sticky;top:0;z-index:20;max-width:none;height:76px;padding-inline:max(48px,calc((100% - 1304px) / 2));background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4)}
+html{scroll-padding-top:96px}
+.brand{font-size:21px;letter-spacing:-.02em}
+.brand-mark{width:38px;height:38px;line-height:38px;font-size:25px;border-radius:12px;background:linear-gradient(150deg,#1b3348,#0b141d);box-shadow:inset 0 0 0 1px rgba(175,206,227,.16);color:#e3e9ef}
+.edition,.library-caption{font:500 10px/1.6 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.edition{margin:3px 0 0 6px}
+
+/* Labels: small uppercase sans like the portfolio; code, counts and numbers stay monospaced. */
+.eyebrow,.label{font:500 11px/1.8 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.intro .eyebrow::before{content:"";display:inline-block;width:9px;height:9px;margin-inline-end:11px;border-radius:50%;vertical-align:-.5px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 55%,transparent),inset -4px 0 0 0 var(--accent)}
+.card-tag{font:500 10px/1.6 var(--sans);letter-spacing:.06em;text-transform:uppercase}
+.exercise-meta{font:12px/1.6 var(--sans);gap:4px 14px}
+.exercise-number{font:400 15px/1 var(--mono);padding-top:14px}
+.session-card p,.exercise-heading h2,.further h2,.dialog-heading h2{font-family:var(--sans);font-weight:400;letter-spacing:-.03em}
+.session-card p{font-size:26px;line-height:1.22}
+
+/* Controls: pill buttons with the accent for the main action, 8px fields on the field colour. */
+button{border-color:var(--line-strong);border-radius:999px;padding:9px 15px}
+button.primary,button.primary:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent);filter:none}
+button.primary:hover{background:color-mix(in srgb,var(--accent) 84%,var(--ink));border-color:color-mix(in srgb,var(--accent) 84%,var(--ink))}
+#theme,.top-actions button{border-color:var(--line-strong)}
+.motion-control{color:var(--muted)}
+.motion-control:hover{color:var(--ink)}
+#tracks button,.exercise-card,.review-toggle,.subtle,footer button,.dialog-heading button{border-color:transparent}
+.exercise-card{border-radius:3px 10px 10px 3px}
+.search input,textarea{border-color:var(--line-strong);border-radius:8px;background:var(--field)}
+#notes,#code{background:var(--field)}
+.search input{padding:10px 12px;font-size:13px}
+.example{border-radius:0 12px 12px 0}
+#reference-code{border-radius:12px;background:var(--field)}
+select,.ui-language select,.language-picker select{-webkit-appearance:none;appearance:none;min-height:34px;padding:4px 30px 4px 11px;border:1px solid var(--line-strong);border-radius:8px;background-color:var(--field);background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 16px) 52%,calc(100% - 11px) 52%;background-size:5px 5px;background-repeat:no-repeat;color:var(--ink);cursor:pointer}
+.ui-language>span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.ui-language select{height:38px;max-width:10rem;padding:0 30px 0 12px;background-color:transparent;font:500 12px var(--sans)}
+select option{color:#111;background:#fff}
+
+/* Panels and dialogs: 16px corners lit along the top edge. */
+.session-card,.workbench{border-radius:16px;box-shadow:inset 0 1px 0 var(--rim)}
+dialog{border-color:var(--line-strong);border-radius:16px;background:var(--raised);box-shadow:var(--lift),inset 0 1px 0 var(--rim)}
+dialog::backdrop{background:rgba(3,7,11,.62)}
+.dialog-heading button{border-radius:50%}
+
+@media(max-width:1100px){.top{padding-inline:28px}}
+/* Phones: the header wraps its controls, so it scrolls with the page instead of holding a tall strip. */
+@media(max-width:760px){.top{position:static}html{scroll-padding-top:0}}
+@media(max-width:360px){.session-card{grid-template-columns:1fr}.session-card .primary{width:100%}}
+@media(max-width:600px){.top{height:auto;padding:16px 18px}.brand-mark{width:32px;height:32px;line-height:32px;font-size:21px;border-radius:10px}.ui-language{width:auto}}
+/* The skip link lands above the glass header. */
+.skip{z-index:30}
+/* Links inside footer text are underlined, like the portfolio’s inline links. */
+footer a{text-decoration:underline;text-decoration-color:var(--line-strong);text-decoration-thickness:1px;text-underline-offset:4px}
+footer a:hover{text-decoration-color:var(--accent)}
