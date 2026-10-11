@@ -8,6 +8,20 @@ const $=id=>document.getElementById(id),ids=exercises.map(e=>e.id),key='thinkroo
 let importFeedback=null;
 let state=blank(),track='all',query='',queue=false,runId=0,runnerReady=false,runTimer,activeRun=null,pendingImport;
 try{const saved=localStorage.getItem(key);if(saved)state=validate(JSON.parse(saved),ids);}catch{$('save-state').textContent=t('Saved data could not be loaded. Export or keep a backup.');}
+const themePreference=matchMedia('(prefers-color-scheme: light)');
+function renderTheme(){
+ const theme=state.theme||(themePreference.matches?'light':'dark');
+ document.documentElement.dataset.theme=theme;
+ $('theme').textContent=theme==='light'?'☾':'☀';
+ const label=t(theme==='light'?'Switch to dark theme':'Switch to light theme');
+ $('theme').setAttribute('aria-label',label);$('theme').title=label;
+ document.querySelector('meta[name="theme-color"]').setAttribute('content',theme==='light'?'#e7ebef':'#0b111a');
+}
+themePreference.addEventListener('change',()=>{if(!state.theme)renderTheme();});
+addEventListener('storage',event=>{
+ if(event.key!==key&&event.key!==null)return;
+ try{const theme=JSON.parse(event.newValue||'{}')?.theme;state.theme=theme==='light'||theme==='dark'?theme:null;renderTheme();}catch{}
+});
 const languagePicker=$('ui-language');
 for(const [value,label] of Object.entries(locales)){const option=document.createElement('option');option.value=value;option.textContent=label;languagePicker.append(option);}
 languagePicker.value=getLocale();applyLocale();
@@ -44,7 +58,7 @@ function render(){
  const e=current(),a=attempt();text('exercise-category',tracks.find(t=>t.id===e.track).name);text('exercise-number',String(ids.indexOf(e.id)+1).padStart(2,'0'));text('title',e.title);text('difficulty',e.level);text('time',`${number(e.minutes)} min`);text('concept',e.concept);text('brief',e.brief);text('example',e.example);text('constraints',e.constraint);
  $('source').hidden=!e.source;if(e.source){$('source').href=e.source.url;text('source',t('Explore further: {label} ↗',{label:e.source.label}));}else $('source').removeAttribute('href');
  $('notes').value=a.notes;$('code-section').hidden=!e.starter;$('code').value=draft(a,e);renderLanguage();text('test-results','');text('revisit',a.revisit?'↺ Saved for later':'↺ Save for later');$('revisit').setAttribute('aria-pressed',String(a.revisit));
- renderHints();renderReview();renderLibrary();document.documentElement.dataset.theme=state.theme;$('theme').setAttribute('aria-label',t(state.theme==='dark'?'Switch to light theme':'Switch to dark theme'));
+ renderHints();renderReview();renderLibrary();renderTheme();
  $('run').disabled=!!activeRun||!runnerReady||!activeLanguage(a).runnable;
 }
 $('search').addEventListener('input',e=>{query=e.target.value;renderLibrary();});$('queue').addEventListener('click',()=>{queue=!queue;renderLibrary();});
@@ -57,7 +71,15 @@ $('hint').addEventListener('click',()=>{attempt().hints=Math.min(3,attempt().hin
 $('review-toggle').addEventListener('click',()=>{attempt().review=!attempt().review;save();renderReview();});
 $('complete').addEventListener('click',()=>{const a=attempt();if(!a.done&&!a.reflection.trim()){text('save-state','Write a short reflection before marking this reviewed.');$('reflection').focus();return;}a.done=!a.done;save();renderReview();renderLibrary();});
 $('revisit').addEventListener('click',()=>{attempt().revisit=!attempt().revisit;save();text('revisit',attempt().revisit?'↺ Saved for later':'↺ Save for later');$('revisit').setAttribute('aria-pressed',String(attempt().revisit));renderLibrary();});
-$('theme').addEventListener('click',()=>{state.theme=state.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=state.theme;$('theme').setAttribute('aria-label',t(state.theme==='dark'?'Switch to light theme':'Switch to dark theme'));save();});
+$('theme').addEventListener('click',()=>{
+ state.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';renderTheme();
+ let saved,notebook;
+ try{saved=localStorage.getItem(key);}catch{$('save-state').textContent=t('Browser storage is unavailable or full. Export a backup.');return;}
+ try{notebook=saved===null?blank():JSON.parse(saved);validate(notebook,ids);}catch{$('save-state').textContent=t('Saved data could not be loaded. Export or keep a backup.');return;}
+ // Another tab may have newer drafts. Keep its stored fields and change only the theme.
+ notebook.theme=state.theme;
+ try{localStorage.setItem(key,JSON.stringify(notebook));$('save-state').textContent=t('Saved on this device');}catch{$('save-state').textContent=t('Browser storage is unavailable or full. Export a backup.');}
+});
 $('reset-code').addEventListener('click',()=>{if(!confirm(t('Replace this exercise’s code with the starter? Your notes stay.')))return;cancelRun();setDraft(attempt(),starter(current(),activeLanguage(attempt()).id));$('code').value=draft(attempt(),current());save();text('test-results','');});
 function cancelRun(){if(!activeRun)return;$('runner').contentWindow.postMessage({type:'cancel'},'*');finishRun();}
 function finishRun(){clearTimeout(runTimer);activeRun=null;$('run').disabled=!runnerReady||!activeLanguage(attempt()).runnable;}

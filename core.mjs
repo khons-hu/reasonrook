@@ -1,6 +1,7 @@
 import {languages} from './languages.mjs';
 export const VERSION=1;
-export function blank(){return {version:VERSION,selected:'repeat',theme:globalThis.matchMedia?.('(prefers-color-scheme: light)').matches?'light':'dark',attempts:{}};}
+// A null theme follows the device. Only a deliberate toggle stores light or dark.
+export function blank(){return {version:VERSION,selected:'repeat',theme:null,attempts:{}};}
 export function newAttempt(){return {notes:'',code:null,language:'javascript',drafts:{},reflection:'',hints:0,review:false,done:false,revisit:false,checks:[]};}
 export function validate(raw,ids){
  if(!raw||typeof raw!=='object'||raw.version!==VERSION||!raw.attempts||typeof raw.attempts!=='object'||Array.isArray(raw.attempts))throw Error('This is not a Reasonrook v1 backup.');
