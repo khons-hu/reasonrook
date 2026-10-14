@@ -1,5 +1,22 @@
 const cache={};
-async function get(path,binary=false){const r=await fetch(path,{credentials:'omit',signal:AbortSignal.timeout(30000)});if(!r.ok)throw Error(`Runtime download failed (${r.status}). Try again when online.`);return binary?r.arrayBuffer():r.text();}
+async function get(path,binary=false){
+ const controller=new AbortController();
+ let timer;
+ const reset=()=>{
+  clearTimeout(timer);
+  timer=setTimeout(()=>controller.abort(new DOMException('Runtime download timed out.','TimeoutError')),30000);
+ };
+ reset();
+ try{
+  const response=await fetch(path,{credentials:'omit',signal:controller.signal});
+  if(!response.ok)throw Error(`Runtime download failed (${response.status}). Try again when online.`);
+  if(!response.body)return binary?await response.arrayBuffer():await response.text();
+  // Large cold runtimes need time on a slow connection. Abort stalled reads.
+  const stream=response.body.pipeThrough(new TransformStream({transform(chunk,output){reset();output.enqueue(chunk);}}));
+  const download=new Response(stream);
+  return binary?await download.arrayBuffer():await download.text();
+ }finally{clearTimeout(timer);}
+}
 export async function resources(language){
  if(language==='javascript')return {};
  if(language==='c'||language==='cpp'){

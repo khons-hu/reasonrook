@@ -87,11 +87,11 @@ $('run').addEventListener('click',async()=>{
  const e=current(),language=activeLanguage(attempt());if(!e.tests||!language.runnable||!runnerReady||activeRun)return;
  const id=++runId,code=$('code').value;activeRun={runId:id,exercise:e.id,language:language.id};$('run').disabled=true;
  text('test-results',language.id==='c'||language.id==='cpp'?'Loading the local compiler (about 60 MB on first use)…':language.id==='python'?'Loading Python locally (about 14 MB on first use)…':language.id==='typescript'?'Loading the TypeScript transpiler…':'Running. The rubber duck is watching.');
- runTimer=setTimeout(()=>{const visible=activeRun?.exercise===state.selected;finishRun();if(visible)text('test-results','Runtime did not finish loading. Check your connection and try again.');},45000);
  try{
   const runtime=await resources(language.id);if(activeRun?.runId!==id)return;
+  runTimer=setTimeout(()=>{const visible=activeRun?.exercise===state.selected;finishRun();if(visible)text('test-results','Runtime did not finish loading. Check your connection and try again.');},45000);
   $('runner').contentWindow.postMessage({type:'run',runId:id,code,language:language.id,resources:runtime,tests:e.tests.map(t=>({...t,immutable:e.id==='merge'}))},'*');
- }catch(error){const visible=activeRun?.exercise===state.selected;finishRun();if(visible)text('test-results',String(error.message));}
+ }catch(error){if(activeRun?.runId!==id)return;const visible=activeRun.exercise===state.selected;finishRun();if(visible)text('test-results',String(error.message));}
 });
 addEventListener('message',event=>{
  if(event.source!==$('runner').contentWindow)return;const data=event.data;
